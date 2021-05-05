@@ -1,0 +1,37 @@
+version: "3" 
+services:
+  web_dynamicrequests:
+    image: alexrogna/dynamicrequests_web:prod
+    expose:
+      - 3000
+    env_file:
+      - .env/production/database_dynamicrequests
+      - .env/production/web_dynamicrequests
+    environment:
+      - VIRTUAL_HOST=dynamicrequests.alexrogna.com
+      - VIRTUAL_PORT=3000
+      - LETSENCRYPT_HOST=dynamicrequests.alexrogna.com
+    networks:
+      - proxy
+    restart: always
+
+  database_dynamicrequests:
+    image: postgres
+    env_file:
+      - .env/production/database_dynamicrequests
+    volumes:
+      - db_data_dynamicrequests:/var/lib/postgresql/data
+    networks:
+      - proxy
+    restart: always
+    
+  db-migrator_dynamicrequests:
+    image: alexrogna/dynamicrequests_web:prod
+    command: ["./wait-for", "--timeout=300", "database_dynamicrequests:5432", "--", "bin/rails", "db:create" , "db:migrate"]
+    env_file:
+      - .env/production/database_dynamicrequests
+      - .env/production/web_dynamicrequests
+volumes:
+  db_data_dynamicrequests:
+networks:
+  proxy:
