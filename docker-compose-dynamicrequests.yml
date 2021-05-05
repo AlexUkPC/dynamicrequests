@@ -31,6 +31,8 @@ services:
     env_file:
       - .env/production/database_dynamicrequests
       - .env/production/web_dynamicrequests
+    networks:
+      - proxy
 volumes:
   db_data_dynamicrequests:
 networks:

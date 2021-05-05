@@ -7,7 +7,7 @@ services:
         USER_ID: "${USER_ID:-1000}"
         GROUP_ID: "${GROUP_ID:-1000}"
     ports:
-      - "3000:3000"
+      - "3022:3000"
     volumes: 
       - ./dynamicrequests:/opt/app
       - gem_cache_dynamicrequests:/gems
@@ -16,6 +16,8 @@ services:
       - .env/development/web_dynamicrequests
     environment: 
       - WEBPACKER_DEV_SERVER_HOST=webpack_dev_server_dynamicrequests
+    networks:
+      - network
   webpack_dev_server_dynamicrequests:
     build:
       context: .
@@ -24,7 +26,7 @@ services:
         GROUP_ID: "${GROUP_ID:-1000}"
     command: ./bin/webpack-dev-server
     ports: 
-      - "3035:3035"
+      - "3057:3057"
     volumes: 
       - ./dynamicrequests:/opt/app
       - gem_cache_dynamicrequests:/gems
@@ -33,12 +35,18 @@ services:
       - .env/development/web_dynamicrequests
     environment: 
       - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+    networks:
+      - network
   database_dynamicrequests:
     image: postgres
     env_file: 
       - .env/development/database_dynamicrequests
     volumes: 
       - db_data_dynamicrequests:/var/lib/postgresql/data
+    networks:
+      - network
 volumes: 
   db_data_dynamicrequests:
   gem_cache_dynamicrequests:
+networks:
+  network:
