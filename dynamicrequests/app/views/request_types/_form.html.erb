@@ -1,0 +1,27 @@
+<%= form_with(model: request_type) do |form| %>
+  <% if request_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(request_type.errors.count, "error") %> prohibited this request_type from being saved:</h2>
+
+      <ul>
+        <% request_type.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+  <%= form.fields_for :fields do |builder| %>
+      <%= render 'field_fields', f: builder %>
+  <% end %>
+  <div class="links">
+      <%= link_to_add_association "Add Field", form, :fields %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

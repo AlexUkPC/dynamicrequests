@@ -1,0 +1,6 @@
+<fieldset class="nested-fields">
+    <%= f.select :field_type, %w[text_field check_box] %>
+    <%= f.text_field :name, palceholder: "field_name" %>
+    <%= f.check_box :required %><%= f.label :required %>
+    <%= link_to_remove_association "Remove Field", f %>
+</fieldset>
