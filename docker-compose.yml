@@ -7,7 +7,7 @@ services:
         USER_ID: "${USER_ID:-1000}"
         GROUP_ID: "${GROUP_ID:-1000}"
     ports:
-      - "3022:3000"
+      - "3021:3000"
     volumes: 
       - ./dynamicrequests:/opt/app
       - gem_cache_dynamicrequests:/gems
@@ -26,7 +26,7 @@ services:
         GROUP_ID: "${GROUP_ID:-1000}"
     command: ./bin/webpack-dev-server
     ports: 
-      - "3057:3057"
+      - "4021:4021"
     volumes: 
       - ./dynamicrequests:/opt/app
       - gem_cache_dynamicrequests:/gems
